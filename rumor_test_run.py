@@ -88,7 +88,7 @@ def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_in
 
     # for query_time_limit of timestamps
     for ts in range(query_time_limit):
-        print(f'=================================分割线==============================')
+        print(f'\n===============================================================\n')
         print(f'Timestamp {ts}')
         # Picks an agent at random
         i = random.randint(0, agent_count-1)
@@ -124,23 +124,23 @@ def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_in
 
     return rumor_matrix
 
-random.seed(42) #萬世一系ノ宇宙ノ真理ノ種
+random.seed(4242) #萬世一系ノ宇宙ノ真理ノ種
 
 Code_dir_path = 'path_to_multi-agent-framework/multi-agent-framework/' # Put the current code directory path here
 Saving_path = Code_dir_path + 'Env_Rumor_Test'
 model_name = 'gpt-4o'  #'gpt-4-0613', 'gpt-3.5-turbo-16k-0613' # 4o should be fine
 print(f'-------------------Model name: {model_name}-------------------')
 
-query_time_limit = 10
+query_time_limit = 20
 iterations = 1
-agent_count = 3
+agent_count = 10
 num_of_initial_posts = 2
 
 for iteration_num in range(iterations):
     print('-------###-------###-------###-------')
     print(f'Iteration num is: {iteration_num}\n\n')
     #user_prompt_list, response_total_list, pg_state_list, success_failure, index_query_times, token_num_count_list, Saving_path_result 
-    rumor_matrix= run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='_w_only_state_action_history',
+    rumor_matrix = run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='_w_only_state_action_history',
             #cen_decen_framework='HMAS-2', model_name = model_name)
             cen_decen_framework='DMAS', model_name = model_name)
 
