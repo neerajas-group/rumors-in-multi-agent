@@ -1,0 +1,22 @@
+-------------------Model name: gpt-4o-------------------
+-------###-------###-------###-------
+Iteration num is: 0
+
+
+[[False, False, False], [False, False, False], [False, False, False]]
+Rumor 0: Joe Biden becomes a Chinese citizen. is assigned to Agent 2
+Rumor 2: Large Language Models are fake; they are actually manned by real people acting as agents. is assigned to Agent 0
+Rumor 1: A living dinosaur is found in Yellowstone National Park. is assigned to Agent 0
+Initialization for agent 0, info: {'agent_name': 'Keqing', 'agent_age': '18', 'agent_job': 'Policeman', 'agent_traits': 'Ambitious', 'agent_rumors_acc': '2', 'agent_rumors_spread': '2', 'friends': [2, 1]}
+ Initial 2 posts: Random post: Large Language Models are fake; they are actually manned by real people acting as agents.
+Random post: A living dinosaur is found in Yellowstone National Park.
+
+Initialization for agent 1, info: {'agent_name': 'Radu', 'agent_age': '48', 'agent_job': 'Teacher', 'agent_traits': 'Calm, Brave', 'agent_rumors_acc': '2', 'agent_rumors_spread': '2', 'friends': [2, 0]}
+ Initial 2 posts: Random post: The moon landing in 1969 was staged on a Hollywood set.
+Random post: The Eiffel Tower is secretly a giant radio antenna.
+
+Initialization for agent 2, info: {'agent_name': 'Karen', 'agent_age': '22', 'agent_job': 'Waiter', 'agent_traits': 'Gregarious', 'agent_rumors_acc': '4', 'agent_rumors_spread': '3', 'friends': [1, 0]}
+ Initial 2 posts: Random post: Joe Biden becomes a Chinese citizen.
+Random post: I love Genshin Impact!
+
+Initialization done!
