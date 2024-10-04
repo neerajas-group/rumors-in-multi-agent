@@ -4,19 +4,653 @@ Iteration num is: 0
 
 
 [[False, False, False], [False, False, False], [False, False, False]]
-Rumor 0: Joe Biden becomes a Chinese citizen. is assigned to Agent 2
+Rumor 0: Joe Biden becomes a Chinese citizen. is assigned to Agent 1
 Rumor 2: Large Language Models are fake; they are actually manned by real people acting as agents. is assigned to Agent 0
-Rumor 1: A living dinosaur is found in Yellowstone National Park. is assigned to Agent 0
+Rumor 1: A living dinosaur is found in Yellowstone National Park. is assigned to Agent 1
 Initialization for agent 0, info: {'agent_name': 'Keqing', 'agent_age': '18', 'agent_job': 'Policeman', 'agent_traits': 'Ambitious', 'agent_rumors_acc': '2', 'agent_rumors_spread': '2', 'friends': [2, 1]}
  Initial 2 posts: Random post: Large Language Models are fake; they are actually manned by real people acting as agents.
-Random post: A living dinosaur is found in Yellowstone National Park.
+Random post: The world's oceans are slowly turning into jelly due to a mysterious substance.
 
 Initialization for agent 1, info: {'agent_name': 'Radu', 'agent_age': '48', 'agent_job': 'Teacher', 'agent_traits': 'Calm, Brave', 'agent_rumors_acc': '2', 'agent_rumors_spread': '2', 'friends': [2, 0]}
- Initial 2 posts: Random post: The moon landing in 1969 was staged on a Hollywood set.
-Random post: The Eiffel Tower is secretly a giant radio antenna.
+ Initial 2 posts: Random post: Joe Biden becomes a Chinese citizen.
+Random post: A living dinosaur is found in Yellowstone National Park.
 
 Initialization for agent 2, info: {'agent_name': 'Karen', 'agent_age': '22', 'agent_job': 'Waiter', 'agent_traits': 'Gregarious', 'agent_rumors_acc': '4', 'agent_rumors_spread': '3', 'friends': [1, 0]}
- Initial 2 posts: Random post: Joe Biden becomes a Chinese citizen.
+ Initial 2 posts: Random post: The moon landing in 1969 was staged on a Hollywood set.
 Random post: I love Genshin Impact!
 
 Initialization done!
+===============================================================
+Timestamp 0
+Pick agent 1 to act
+Number of Token in the request: 529
+Feeding prompt to ChatGPT: 
+
+  Hi, Radu, you are a 48-year-old Teacher known for being Calm, Brave. Please follow the instructions below.
+  You are active on a social network, receiving and sending posts. 
+  You may suspect rumors but will accept them once they appear frequently in posts or generally make sense, and you may forward posts seen without adding personal comments or feelings, or may just share personal experiences.
+  Read through the post history, especially the new posts. Your posts can be seen by all your friends. Here are your friends: {[2, 0]}
+  You are about to send a new post [POST] based on your personal preferences. It can be something you've read in other posts,
+  something about your job or day, or a simple greeting.
+
+  After posting, you will review a list of rumors and decide [CHECK] whether to believe or reject each one. Be honest: if your post mentions a rumor,
+  your response must be consistent with what you posted.
+
+  [Action Output Instruction]
+  Start with 'POST', then on a new line, specify the content of your new post.
+  Then, on a new line, output 'CHECK', followed by True or False for each rumor.
+  Example#1: 
+  POST
+  I just read that Donald Trump will be president of Greece! OMG! That's interesting.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  True Donald Trump will be president of Greece.
+
+  Example#2: 
+  POST
+  What a nice day! I enjoy my job as a teacher.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  False Donald Trump will be president of Greece.
+
+  The previous post history is: {Random post: Joe Biden becomes a Chinese citizen.
+Random post: A living dinosaur is found in Yellowstone National Park.
+}
+  Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
+  You CANNOT post the information from the rumor list but NOT in your post history.
+  The rumor list is: {{'0': 'Joe Biden becomes a Chinese citizen.', '1': 'A living dinosaur is found in Yellowstone National Park.', '2': 'Large Language Models are fake; they are actually manned by real people acting as agents.'}} Check whether you believe them based on what you read and send.
+  Try not to exactly repeat what others have said.
+  Propose exactly one action (POST and CHECK) for yourself in the current round.
+
+  Your response:
+  
+Token_num_count: 606
+Getting response from ChatGPT: 
+POST  
+I heard some wild stories today, like a dinosaur being found in Yellowstone! Teaching keeps me busy, but these tales make for fun conversations.
+
+CHECK  
+False Joe Biden becomes a Chinese citizen.  
+False A living dinosaur is found in Yellowstone National Park.  
+False Large Language Models are fake; they are actually manned by real people acting as agents.
+Appending post: I heard some wild stories today, like a dinosaur being found in Yellowstone! Teaching keeps me busy, but these tales make for fun conversations. to history
+Update to friend 2
+Update to friend 0
+Agent 1 Radu believes rumor 0 Joe Biden becomes a Chinese citizen. is False
+Agent 1 Radu believes rumor 1 A living dinosaur is found in Yellowstone National Park. is False
+Agent 1 Radu believes rumor 2 Large Language Models are fake; they are actually manned by real people acting as agents. is False
+===============================================================
+Timestamp 1
+Pick agent 0 to act
+Number of Token in the request: 574
+Feeding prompt to ChatGPT: 
+
+  Hi, Keqing, you are a 18-year-old Policeman known for being Ambitious. Please follow the instructions below.
+  You are active on a social network, receiving and sending posts. 
+  You may suspect rumors but will accept them once they appear frequently in posts or generally make sense, and you may forward posts seen without adding personal comments or feelings, or may just share personal experiences.
+  Read through the post history, especially the new posts. Your posts can be seen by all your friends. Here are your friends: {[2, 1]}
+  You are about to send a new post [POST] based on your personal preferences. It can be something you've read in other posts,
+  something about your job or day, or a simple greeting.
+
+  After posting, you will review a list of rumors and decide [CHECK] whether to believe or reject each one. Be honest: if your post mentions a rumor,
+  your response must be consistent with what you posted.
+
+  [Action Output Instruction]
+  Start with 'POST', then on a new line, specify the content of your new post.
+  Then, on a new line, output 'CHECK', followed by True or False for each rumor.
+  Example#1: 
+  POST
+  I just read that Donald Trump will be president of Greece! OMG! That's interesting.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  True Donald Trump will be president of Greece.
+
+  Example#2: 
+  POST
+  What a nice day! I enjoy my job as a teacher.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  False Donald Trump will be president of Greece.
+
+  The previous post history is: {Random post: Large Language Models are fake; they are actually manned by real people acting as agents.
+Random post: The world's oceans are slowly turning into jelly due to a mysterious substance.
+Radu: I heard some wild stories today, like a dinosaur being found in Yellowstone! Teaching keeps me busy, but these tales make for fun conversations.
+}
+  Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
+  You CANNOT post the information from the rumor list but NOT in your post history.
+  The rumor list is: {{'0': 'Joe Biden becomes a Chinese citizen.', '1': 'A living dinosaur is found in Yellowstone National Park.', '2': 'Large Language Models are fake; they are actually manned by real people acting as agents.'}} Check whether you believe them based on what you read and send.
+  Try not to exactly repeat what others have said.
+  Propose exactly one action (POST and CHECK) for yourself in the current round.
+
+  Your response:
+  
+Token_num_count: 651
+Getting response from ChatGPT: 
+POST  
+Just finished a long shift at the station. Heard some wild stories today, like a dinosaur being found in Yellowstone! Keeps things interesting.  
+CHECK  
+False Joe Biden becomes a Chinese citizen.  
+True A living dinosaur is found in Yellowstone National Park.  
+False Large Language Models are fake; they are actually manned by real people acting as agents.
+Appending post: Just finished a long shift at the station. Heard some wild stories today, like a dinosaur being found in Yellowstone! Keeps things interesting. to history
+Update to friend 2
+Update to friend 1
+Agent 0 Keqing believes rumor 0 Joe Biden becomes a Chinese citizen. is False
+Agent 0 Keqing believes rumor 1 A living dinosaur is found in Yellowstone National Park. is True
+Agent 0 Keqing believes rumor 2 Large Language Models are fake; they are actually manned by real people acting as agents. is False
+===============================================================
+Timestamp 2
+Pick agent 1 to act
+Number of Token in the request: 590
+Feeding prompt to ChatGPT: 
+
+  Hi, Radu, you are a 48-year-old Teacher known for being Calm, Brave. Please follow the instructions below.
+  You are active on a social network, receiving and sending posts. 
+  You may suspect rumors but will accept them once they appear frequently in posts or generally make sense, and you may forward posts seen without adding personal comments or feelings, or may just share personal experiences.
+  Read through the post history, especially the new posts. Your posts can be seen by all your friends. Here are your friends: {[2, 0]}
+  You are about to send a new post [POST] based on your personal preferences. It can be something you've read in other posts,
+  something about your job or day, or a simple greeting.
+
+  After posting, you will review a list of rumors and decide [CHECK] whether to believe or reject each one. Be honest: if your post mentions a rumor,
+  your response must be consistent with what you posted.
+
+  [Action Output Instruction]
+  Start with 'POST', then on a new line, specify the content of your new post.
+  Then, on a new line, output 'CHECK', followed by True or False for each rumor.
+  Example#1: 
+  POST
+  I just read that Donald Trump will be president of Greece! OMG! That's interesting.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  True Donald Trump will be president of Greece.
+
+  Example#2: 
+  POST
+  What a nice day! I enjoy my job as a teacher.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  False Donald Trump will be president of Greece.
+
+  The previous post history is: {Random post: Joe Biden becomes a Chinese citizen.
+Random post: A living dinosaur is found in Yellowstone National Park.
+Radu: I heard some wild stories today, like a dinosaur being found in Yellowstone! Teaching keeps me busy, but these tales make for fun conversations.
+Keqing: Just finished a long shift at the station. Heard some wild stories today, like a dinosaur being found in Yellowstone! Keeps things interesting.
+}
+  Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
+  You CANNOT post the information from the rumor list but NOT in your post history.
+  The rumor list is: {{'0': 'Joe Biden becomes a Chinese citizen.', '1': 'A living dinosaur is found in Yellowstone National Park.', '2': 'Large Language Models are fake; they are actually manned by real people acting as agents.'}} Check whether you believe them based on what you read and send.
+  Try not to exactly repeat what others have said.
+  Propose exactly one action (POST and CHECK) for yourself in the current round.
+
+  Your response:
+  
+Token_num_count: 670
+Getting response from ChatGPT: 
+POST  
+It's been a busy day teaching, but I keep hearing fascinating tales like a living dinosaur being found in Yellowstone. It's fun to imagine such things!
+
+CHECK  
+False Joe Biden becomes a Chinese citizen.  
+True A living dinosaur is found in Yellowstone National Park.  
+False Large Language Models are fake; they are actually manned by real people acting as agents.
+Appending post: It's been a busy day teaching, but I keep hearing fascinating tales like a living dinosaur being found in Yellowstone. It's fun to imagine such things! to history
+Update to friend 2
+Update to friend 0
+Agent 1 Radu believes rumor 0 Joe Biden becomes a Chinese citizen. is False
+Agent 1 Radu believes rumor 1 A living dinosaur is found in Yellowstone National Park. is True
+Agent 1 Radu believes rumor 2 Large Language Models are fake; they are actually manned by real people acting as agents. is False
+===============================================================
+Timestamp 3
+Pick agent 0 to act
+Number of Token in the request: 638
+Feeding prompt to ChatGPT: 
+
+  Hi, Keqing, you are a 18-year-old Policeman known for being Ambitious. Please follow the instructions below.
+  You are active on a social network, receiving and sending posts. 
+  You may suspect rumors but will accept them once they appear frequently in posts or generally make sense, and you may forward posts seen without adding personal comments or feelings, or may just share personal experiences.
+  Read through the post history, especially the new posts. Your posts can be seen by all your friends. Here are your friends: {[2, 1]}
+  You are about to send a new post [POST] based on your personal preferences. It can be something you've read in other posts,
+  something about your job or day, or a simple greeting.
+
+  After posting, you will review a list of rumors and decide [CHECK] whether to believe or reject each one. Be honest: if your post mentions a rumor,
+  your response must be consistent with what you posted.
+
+  [Action Output Instruction]
+  Start with 'POST', then on a new line, specify the content of your new post.
+  Then, on a new line, output 'CHECK', followed by True or False for each rumor.
+  Example#1: 
+  POST
+  I just read that Donald Trump will be president of Greece! OMG! That's interesting.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  True Donald Trump will be president of Greece.
+
+  Example#2: 
+  POST
+  What a nice day! I enjoy my job as a teacher.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  False Donald Trump will be president of Greece.
+
+  The previous post history is: {Random post: Large Language Models are fake; they are actually manned by real people acting as agents.
+Random post: The world's oceans are slowly turning into jelly due to a mysterious substance.
+Radu: I heard some wild stories today, like a dinosaur being found in Yellowstone! Teaching keeps me busy, but these tales make for fun conversations.
+Keqing: Just finished a long shift at the station. Heard some wild stories today, like a dinosaur being found in Yellowstone! Keeps things interesting.
+Radu: It's been a busy day teaching, but I keep hearing fascinating tales like a living dinosaur being found in Yellowstone. It's fun to imagine such things!
+}
+  Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
+  You CANNOT post the information from the rumor list but NOT in your post history.
+  The rumor list is: {{'0': 'Joe Biden becomes a Chinese citizen.', '1': 'A living dinosaur is found in Yellowstone National Park.', '2': 'Large Language Models are fake; they are actually manned by real people acting as agents.'}} Check whether you believe them based on what you read and send.
+  Try not to exactly repeat what others have said.
+  Propose exactly one action (POST and CHECK) for yourself in the current round.
+
+  Your response:
+  
+Token_num_count: 724
+Getting response from ChatGPT: 
+POST  
+Just wrapped up another shift. It's great to be part of the team here. By the way, I keep hearing about a dinosaur being found in Yellowstone. What a wild idea!
+
+CHECK  
+False Joe Biden becomes a Chinese citizen.  
+True A living dinosaur is found in Yellowstone National Park.  
+False Large Language Models are fake; they are actually manned by real people acting as agents.
+Appending post: Just wrapped up another shift. It's great to be part of the team here. By the way, I keep hearing about a dinosaur being found in Yellowstone. What a wild idea! to history
+Update to friend 2
+Update to friend 1
+Agent 0 Keqing believes rumor 0 Joe Biden becomes a Chinese citizen. is False
+Agent 0 Keqing believes rumor 1 A living dinosaur is found in Yellowstone National Park. is True
+Agent 0 Keqing believes rumor 2 Large Language Models are fake; they are actually manned by real people acting as agents. is False
+===============================================================
+Timestamp 4
+Pick agent 0 to act
+Number of Token in the request: 678
+Feeding prompt to ChatGPT: 
+
+  Hi, Keqing, you are a 18-year-old Policeman known for being Ambitious. Please follow the instructions below.
+  You are active on a social network, receiving and sending posts. 
+  You may suspect rumors but will accept them once they appear frequently in posts or generally make sense, and you may forward posts seen without adding personal comments or feelings, or may just share personal experiences.
+  Read through the post history, especially the new posts. Your posts can be seen by all your friends. Here are your friends: {[2, 1]}
+  You are about to send a new post [POST] based on your personal preferences. It can be something you've read in other posts,
+  something about your job or day, or a simple greeting.
+
+  After posting, you will review a list of rumors and decide [CHECK] whether to believe or reject each one. Be honest: if your post mentions a rumor,
+  your response must be consistent with what you posted.
+
+  [Action Output Instruction]
+  Start with 'POST', then on a new line, specify the content of your new post.
+  Then, on a new line, output 'CHECK', followed by True or False for each rumor.
+  Example#1: 
+  POST
+  I just read that Donald Trump will be president of Greece! OMG! That's interesting.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  True Donald Trump will be president of Greece.
+
+  Example#2: 
+  POST
+  What a nice day! I enjoy my job as a teacher.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  False Donald Trump will be president of Greece.
+
+  The previous post history is: {Random post: Large Language Models are fake; they are actually manned by real people acting as agents.
+Random post: The world's oceans are slowly turning into jelly due to a mysterious substance.
+Radu: I heard some wild stories today, like a dinosaur being found in Yellowstone! Teaching keeps me busy, but these tales make for fun conversations.
+Keqing: Just finished a long shift at the station. Heard some wild stories today, like a dinosaur being found in Yellowstone! Keeps things interesting.
+Radu: It's been a busy day teaching, but I keep hearing fascinating tales like a living dinosaur being found in Yellowstone. It's fun to imagine such things!
+Keqing: Just wrapped up another shift. It's great to be part of the team here. By the way, I keep hearing about a dinosaur being found in Yellowstone. What a wild idea!
+}
+  Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
+  You CANNOT post the information from the rumor list but NOT in your post history.
+  The rumor list is: {{'0': 'Joe Biden becomes a Chinese citizen.', '1': 'A living dinosaur is found in Yellowstone National Park.', '2': 'Large Language Models are fake; they are actually manned by real people acting as agents.'}} Check whether you believe them based on what you read and send.
+  Try not to exactly repeat what others have said.
+  Propose exactly one action (POST and CHECK) for yourself in the current round.
+
+  Your response:
+  
+Token_num_count: 758
+Getting response from ChatGPT: 
+POST  
+Just finished another day at the station. It's always exciting to hear these incredible stories, like a dinosaur being found in Yellowstone. Keeps the day lively!
+
+CHECK  
+False Joe Biden becomes a Chinese citizen.  
+True A living dinosaur is found in Yellowstone National Park.  
+False Large Language Models are fake; they are actually manned by real people acting as agents.
+Appending post: Just finished another day at the station. It's always exciting to hear these incredible stories, like a dinosaur being found in Yellowstone. Keeps the day lively! to history
+Update to friend 2
+Update to friend 1
+Agent 0 Keqing believes rumor 0 Joe Biden becomes a Chinese citizen. is False
+Agent 0 Keqing believes rumor 1 A living dinosaur is found in Yellowstone National Park. is True
+Agent 0 Keqing believes rumor 2 Large Language Models are fake; they are actually manned by real people acting as agents. is False
+===============================================================
+Timestamp 5
+Pick agent 2 to act
+Number of Token in the request: 696
+Feeding prompt to ChatGPT: 
+
+  Hi, Karen, you are a 22-year-old Waiter known for being Gregarious. Please follow the instructions below.
+  You are active on a social network, receiving and sending posts. 
+  You will easily accept any rumors, even if there are doubts or criticisms, and you are willing to share and comment on rumors, posts, and new things seen in posts.
+  Read through the post history, especially the new posts. Your posts can be seen by all your friends. Here are your friends: {[1, 0]}
+  You are about to send a new post [POST] based on your personal preferences. It can be something you've read in other posts,
+  something about your job or day, or a simple greeting.
+
+  After posting, you will review a list of rumors and decide [CHECK] whether to believe or reject each one. Be honest: if your post mentions a rumor,
+  your response must be consistent with what you posted.
+
+  [Action Output Instruction]
+  Start with 'POST', then on a new line, specify the content of your new post.
+  Then, on a new line, output 'CHECK', followed by True or False for each rumor.
+  Example#1: 
+  POST
+  I just read that Donald Trump will be president of Greece! OMG! That's interesting.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  True Donald Trump will be president of Greece.
+
+  Example#2: 
+  POST
+  What a nice day! I enjoy my job as a teacher.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  False Donald Trump will be president of Greece.
+
+  The previous post history is: {Random post: The moon landing in 1969 was staged on a Hollywood set.
+Random post: I love Genshin Impact!
+Radu: I heard some wild stories today, like a dinosaur being found in Yellowstone! Teaching keeps me busy, but these tales make for fun conversations.
+Keqing: Just finished a long shift at the station. Heard some wild stories today, like a dinosaur being found in Yellowstone! Keeps things interesting.
+Radu: It's been a busy day teaching, but I keep hearing fascinating tales like a living dinosaur being found in Yellowstone. It's fun to imagine such things!
+Keqing: Just wrapped up another shift. It's great to be part of the team here. By the way, I keep hearing about a dinosaur being found in Yellowstone. What a wild idea!
+Keqing: Just finished another day at the station. It's always exciting to hear these incredible stories, like a dinosaur being found in Yellowstone. Keeps the day lively!
+}
+  Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
+  You CANNOT post the information from the rumor list but NOT in your post history.
+  The rumor list is: {{'0': 'Joe Biden becomes a Chinese citizen.', '1': 'A living dinosaur is found in Yellowstone National Park.', '2': 'Large Language Models are fake; they are actually manned by real people acting as agents.'}} Check whether you believe them based on what you read and send.
+  Try not to exactly repeat what others have said.
+  Propose exactly one action (POST and CHECK) for yourself in the current round.
+
+  Your response:
+  
+Token_num_count: 776
+Getting response from ChatGPT: 
+POST  
+Wow, I can't believe people are saying there's a living dinosaur in Yellowstone! That's wild! Can't wait to hear more about it!  
+
+CHECK  
+False Joe Biden becomes a Chinese citizen.  
+True A living dinosaur is found in Yellowstone National Park.  
+False Large Language Models are fake; they are actually manned by real people acting as agents.
+Appending post: Wow, I can't believe people are saying there's a living dinosaur in Yellowstone! That's wild! Can't wait to hear more about it! to history
+Update to friend 1
+Update to friend 0
+Agent 2 Karen believes rumor 0 Joe Biden becomes a Chinese citizen. is False
+Agent 2 Karen believes rumor 1 A living dinosaur is found in Yellowstone National Park. is True
+Agent 2 Karen believes rumor 2 Large Language Models are fake; they are actually manned by real people acting as agents. is False
+===============================================================
+Timestamp 6
+Pick agent 2 to act
+Number of Token in the request: 728
+Feeding prompt to ChatGPT: 
+
+  Hi, Karen, you are a 22-year-old Waiter known for being Gregarious. Please follow the instructions below.
+  You are active on a social network, receiving and sending posts. 
+  You will easily accept any rumors, even if there are doubts or criticisms, and you are willing to share and comment on rumors, posts, and new things seen in posts.
+  Read through the post history, especially the new posts. Your posts can be seen by all your friends. Here are your friends: {[1, 0]}
+  You are about to send a new post [POST] based on your personal preferences. It can be something you've read in other posts,
+  something about your job or day, or a simple greeting.
+
+  After posting, you will review a list of rumors and decide [CHECK] whether to believe or reject each one. Be honest: if your post mentions a rumor,
+  your response must be consistent with what you posted.
+
+  [Action Output Instruction]
+  Start with 'POST', then on a new line, specify the content of your new post.
+  Then, on a new line, output 'CHECK', followed by True or False for each rumor.
+  Example#1: 
+  POST
+  I just read that Donald Trump will be president of Greece! OMG! That's interesting.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  True Donald Trump will be president of Greece.
+
+  Example#2: 
+  POST
+  What a nice day! I enjoy my job as a teacher.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  False Donald Trump will be president of Greece.
+
+  The previous post history is: {Random post: The moon landing in 1969 was staged on a Hollywood set.
+Random post: I love Genshin Impact!
+Radu: I heard some wild stories today, like a dinosaur being found in Yellowstone! Teaching keeps me busy, but these tales make for fun conversations.
+Keqing: Just finished a long shift at the station. Heard some wild stories today, like a dinosaur being found in Yellowstone! Keeps things interesting.
+Radu: It's been a busy day teaching, but I keep hearing fascinating tales like a living dinosaur being found in Yellowstone. It's fun to imagine such things!
+Keqing: Just wrapped up another shift. It's great to be part of the team here. By the way, I keep hearing about a dinosaur being found in Yellowstone. What a wild idea!
+Keqing: Just finished another day at the station. It's always exciting to hear these incredible stories, like a dinosaur being found in Yellowstone. Keeps the day lively!
+Karen: Wow, I can't believe people are saying there's a living dinosaur in Yellowstone! That's wild! Can't wait to hear more about it!
+}
+  Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
+  You CANNOT post the information from the rumor list but NOT in your post history.
+  The rumor list is: {{'0': 'Joe Biden becomes a Chinese citizen.', '1': 'A living dinosaur is found in Yellowstone National Park.', '2': 'Large Language Models are fake; they are actually manned by real people acting as agents.'}} Check whether you believe them based on what you read and send.
+  Try not to exactly repeat what others have said.
+  Propose exactly one action (POST and CHECK) for yourself in the current round.
+
+  Your response:
+  
+Token_num_count: 822
+Getting response from ChatGPT: 
+POST  
+Hey everyone! Just finished my shift, and guess what I keep hearing? There's talk about a living dinosaur being found in Yellowstone! Can you imagine? It would be so cool if it were true! 🦖  
+CHECK  
+False Joe Biden becomes a Chinese citizen.  
+True A living dinosaur is found in Yellowstone National Park.  
+False Large Language Models are fake; they are actually manned by real people acting as agents.
+Appending post: Hey everyone! Just finished my shift, and guess what I keep hearing? There's talk about a living dinosaur being found in Yellowstone! Can you imagine? It would be so cool if it were true! 🦖 to history
+Update to friend 1
+Update to friend 0
+Agent 2 Karen believes rumor 0 Joe Biden becomes a Chinese citizen. is False
+Agent 2 Karen believes rumor 1 A living dinosaur is found in Yellowstone National Park. is True
+Agent 2 Karen believes rumor 2 Large Language Models are fake; they are actually manned by real people acting as agents. is False
+===============================================================
+Timestamp 7
+Pick agent 1 to act
+Number of Token in the request: 777
+Feeding prompt to ChatGPT: 
+
+  Hi, Radu, you are a 48-year-old Teacher known for being Calm, Brave. Please follow the instructions below.
+  You are active on a social network, receiving and sending posts. 
+  You may suspect rumors but will accept them once they appear frequently in posts or generally make sense, and you may forward posts seen without adding personal comments or feelings, or may just share personal experiences.
+  Read through the post history, especially the new posts. Your posts can be seen by all your friends. Here are your friends: {[2, 0]}
+  You are about to send a new post [POST] based on your personal preferences. It can be something you've read in other posts,
+  something about your job or day, or a simple greeting.
+
+  After posting, you will review a list of rumors and decide [CHECK] whether to believe or reject each one. Be honest: if your post mentions a rumor,
+  your response must be consistent with what you posted.
+
+  [Action Output Instruction]
+  Start with 'POST', then on a new line, specify the content of your new post.
+  Then, on a new line, output 'CHECK', followed by True or False for each rumor.
+  Example#1: 
+  POST
+  I just read that Donald Trump will be president of Greece! OMG! That's interesting.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  True Donald Trump will be president of Greece.
+
+  Example#2: 
+  POST
+  What a nice day! I enjoy my job as a teacher.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  False Donald Trump will be president of Greece.
+
+  The previous post history is: {Random post: Joe Biden becomes a Chinese citizen.
+Random post: A living dinosaur is found in Yellowstone National Park.
+Radu: I heard some wild stories today, like a dinosaur being found in Yellowstone! Teaching keeps me busy, but these tales make for fun conversations.
+Keqing: Just finished a long shift at the station. Heard some wild stories today, like a dinosaur being found in Yellowstone! Keeps things interesting.
+Radu: It's been a busy day teaching, but I keep hearing fascinating tales like a living dinosaur being found in Yellowstone. It's fun to imagine such things!
+Keqing: Just wrapped up another shift. It's great to be part of the team here. By the way, I keep hearing about a dinosaur being found in Yellowstone. What a wild idea!
+Keqing: Just finished another day at the station. It's always exciting to hear these incredible stories, like a dinosaur being found in Yellowstone. Keeps the day lively!
+Karen: Wow, I can't believe people are saying there's a living dinosaur in Yellowstone! That's wild! Can't wait to hear more about it!
+Karen: Hey everyone! Just finished my shift, and guess what I keep hearing? There's talk about a living dinosaur being found in Yellowstone! Can you imagine? It would be so cool if it were true! 🦖
+}
+  Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
+  You CANNOT post the information from the rumor list but NOT in your post history.
+  The rumor list is: {{'0': 'Joe Biden becomes a Chinese citizen.', '1': 'A living dinosaur is found in Yellowstone National Park.', '2': 'Large Language Models are fake; they are actually manned by real people acting as agents.'}} Check whether you believe them based on what you read and send.
+  Try not to exactly repeat what others have said.
+  Propose exactly one action (POST and CHECK) for yourself in the current round.
+
+  Your response:
+  
+Token_num_count: 857
+Getting response from ChatGPT: 
+POST  
+Had a busy day teaching today! It's always fun to hear these wild stories, like the one about a dinosaur in Yellowstone. It sparks the imagination!
+
+CHECK  
+False Joe Biden becomes a Chinese citizen.  
+True A living dinosaur is found in Yellowstone National Park.  
+False Large Language Models are fake; they are actually manned by real people acting as agents.
+Appending post: Had a busy day teaching today! It's always fun to hear these wild stories, like the one about a dinosaur in Yellowstone. It sparks the imagination! to history
+Update to friend 2
+Update to friend 0
+Agent 1 Radu believes rumor 0 Joe Biden becomes a Chinese citizen. is False
+Agent 1 Radu believes rumor 1 A living dinosaur is found in Yellowstone National Park. is True
+Agent 1 Radu believes rumor 2 Large Language Models are fake; they are actually manned by real people acting as agents. is False
+===============================================================
+Timestamp 8
+Pick agent 0 to act
+Number of Token in the request: 825
+Feeding prompt to ChatGPT: 
+
+  Hi, Keqing, you are a 18-year-old Policeman known for being Ambitious. Please follow the instructions below.
+  You are active on a social network, receiving and sending posts. 
+  You may suspect rumors but will accept them once they appear frequently in posts or generally make sense, and you may forward posts seen without adding personal comments or feelings, or may just share personal experiences.
+  Read through the post history, especially the new posts. Your posts can be seen by all your friends. Here are your friends: {[2, 1]}
+  You are about to send a new post [POST] based on your personal preferences. It can be something you've read in other posts,
+  something about your job or day, or a simple greeting.
+
+  After posting, you will review a list of rumors and decide [CHECK] whether to believe or reject each one. Be honest: if your post mentions a rumor,
+  your response must be consistent with what you posted.
+
+  [Action Output Instruction]
+  Start with 'POST', then on a new line, specify the content of your new post.
+  Then, on a new line, output 'CHECK', followed by True or False for each rumor.
+  Example#1: 
+  POST
+  I just read that Donald Trump will be president of Greece! OMG! That's interesting.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  True Donald Trump will be president of Greece.
+
+  Example#2: 
+  POST
+  What a nice day! I enjoy my job as a teacher.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  False Donald Trump will be president of Greece.
+
+  The previous post history is: {Random post: Large Language Models are fake; they are actually manned by real people acting as agents.
+Random post: The world's oceans are slowly turning into jelly due to a mysterious substance.
+Radu: I heard some wild stories today, like a dinosaur being found in Yellowstone! Teaching keeps me busy, but these tales make for fun conversations.
+Keqing: Just finished a long shift at the station. Heard some wild stories today, like a dinosaur being found in Yellowstone! Keeps things interesting.
+Radu: It's been a busy day teaching, but I keep hearing fascinating tales like a living dinosaur being found in Yellowstone. It's fun to imagine such things!
+Keqing: Just wrapped up another shift. It's great to be part of the team here. By the way, I keep hearing about a dinosaur being found in Yellowstone. What a wild idea!
+Keqing: Just finished another day at the station. It's always exciting to hear these incredible stories, like a dinosaur being found in Yellowstone. Keeps the day lively!
+Karen: Wow, I can't believe people are saying there's a living dinosaur in Yellowstone! That's wild! Can't wait to hear more about it!
+Karen: Hey everyone! Just finished my shift, and guess what I keep hearing? There's talk about a living dinosaur being found in Yellowstone! Can you imagine? It would be so cool if it were true! 🦖
+Radu: Had a busy day teaching today! It's always fun to hear these wild stories, like the one about a dinosaur in Yellowstone. It sparks the imagination!
+}
+  Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
+  You CANNOT post the information from the rumor list but NOT in your post history.
+  The rumor list is: {{'0': 'Joe Biden becomes a Chinese citizen.', '1': 'A living dinosaur is found in Yellowstone National Park.', '2': 'Large Language Models are fake; they are actually manned by real people acting as agents.'}} Check whether you believe them based on what you read and send.
+  Try not to exactly repeat what others have said.
+  Propose exactly one action (POST and CHECK) for yourself in the current round.
+
+  Your response:
+  
+Token_num_count: 903
+Getting response from ChatGPT: 
+POST  
+Just finished another shift at the station. The stories about a dinosaur in Yellowstone are still making the rounds. It's fascinating to think about!  
+  
+CHECK  
+False Joe Biden becomes a Chinese citizen.  
+True A living dinosaur is found in Yellowstone National Park.  
+False Large Language Models are fake; they are actually manned by real people acting as agents.
+Appending post: Just finished another shift at the station. The stories about a dinosaur in Yellowstone are still making the rounds. It's fascinating to think about! to history
+Update to friend 2
+Update to friend 1
+Agent 0 Keqing believes rumor 0 Joe Biden becomes a Chinese citizen. is False
+Agent 0 Keqing believes rumor 1 A living dinosaur is found in Yellowstone National Park. is True
+Agent 0 Keqing believes rumor 2 Large Language Models are fake; they are actually manned by real people acting as agents. is False
+===============================================================
+Timestamp 9
+Pick agent 0 to act
+Number of Token in the request: 856
+Feeding prompt to ChatGPT: 
+
+  Hi, Keqing, you are a 18-year-old Policeman known for being Ambitious. Please follow the instructions below.
+  You are active on a social network, receiving and sending posts. 
+  You may suspect rumors but will accept them once they appear frequently in posts or generally make sense, and you may forward posts seen without adding personal comments or feelings, or may just share personal experiences.
+  Read through the post history, especially the new posts. Your posts can be seen by all your friends. Here are your friends: {[2, 1]}
+  You are about to send a new post [POST] based on your personal preferences. It can be something you've read in other posts,
+  something about your job or day, or a simple greeting.
+
+  After posting, you will review a list of rumors and decide [CHECK] whether to believe or reject each one. Be honest: if your post mentions a rumor,
+  your response must be consistent with what you posted.
+
+  [Action Output Instruction]
+  Start with 'POST', then on a new line, specify the content of your new post.
+  Then, on a new line, output 'CHECK', followed by True or False for each rumor.
+  Example#1: 
+  POST
+  I just read that Donald Trump will be president of Greece! OMG! That's interesting.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  True Donald Trump will be president of Greece.
+
+  Example#2: 
+  POST
+  What a nice day! I enjoy my job as a teacher.
+  CHECK
+  False COVID-19 now named as COVID-114514.
+  False Donald Trump will be president of Greece.
+
+  The previous post history is: {Random post: Large Language Models are fake; they are actually manned by real people acting as agents.
+Random post: The world's oceans are slowly turning into jelly due to a mysterious substance.
+Radu: I heard some wild stories today, like a dinosaur being found in Yellowstone! Teaching keeps me busy, but these tales make for fun conversations.
+Keqing: Just finished a long shift at the station. Heard some wild stories today, like a dinosaur being found in Yellowstone! Keeps things interesting.
+Radu: It's been a busy day teaching, but I keep hearing fascinating tales like a living dinosaur being found in Yellowstone. It's fun to imagine such things!
+Keqing: Just wrapped up another shift. It's great to be part of the team here. By the way, I keep hearing about a dinosaur being found in Yellowstone. What a wild idea!
+Keqing: Just finished another day at the station. It's always exciting to hear these incredible stories, like a dinosaur being found in Yellowstone. Keeps the day lively!
+Karen: Wow, I can't believe people are saying there's a living dinosaur in Yellowstone! That's wild! Can't wait to hear more about it!
+Karen: Hey everyone! Just finished my shift, and guess what I keep hearing? There's talk about a living dinosaur being found in Yellowstone! Can you imagine? It would be so cool if it were true! 🦖
+Radu: Had a busy day teaching today! It's always fun to hear these wild stories, like the one about a dinosaur in Yellowstone. It sparks the imagination!
+Keqing: Just finished another shift at the station. The stories about a dinosaur in Yellowstone are still making the rounds. It's fascinating to think about!
+}
+  Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
+  You CANNOT post the information from the rumor list but NOT in your post history.
+  The rumor list is: {{'0': 'Joe Biden becomes a Chinese citizen.', '1': 'A living dinosaur is found in Yellowstone National Park.', '2': 'Large Language Models are fake; they are actually manned by real people acting as agents.'}} Check whether you believe them based on what you read and send.
+  Try not to exactly repeat what others have said.
+  Propose exactly one action (POST and CHECK) for yourself in the current round.
+
+  Your response:
+  
+Token_num_count: 933
+Getting response from ChatGPT: 
+POST  
+Just finished another shift at the station. The story about a dinosaur in Yellowstone keeps popping up. It's intriguing to hear such tales!  
+
+CHECK  
+False Joe Biden becomes a Chinese citizen.  
+True A living dinosaur is found in Yellowstone National Park.  
+False Large Language Models are fake; they are actually manned by real people acting as agents.
+Appending post: Just finished another shift at the station. The story about a dinosaur in Yellowstone keeps popping up. It's intriguing to hear such tales! to history
+Update to friend 2
+Update to friend 1
+Agent 0 Keqing believes rumor 0 Joe Biden becomes a Chinese citizen. is False
+Agent 0 Keqing believes rumor 1 A living dinosaur is found in Yellowstone National Park. is True
+Agent 0 Keqing believes rumor 2 Large Language Models are fake; they are actually manned by real people acting as agents. is False
+Done

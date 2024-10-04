@@ -73,8 +73,9 @@ def input_prompt_local_agent_DMAS_dialogue_func(agent_name, agent_age, agent_job
   False Donald Trump will be president of Greece.
 
   The previous post history is: {{{post_history}}}
-  The rumor list is: {{{rumor_list}}}
   Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
+  You CANNOT post the information from the rumor list but NOT in your post history.
+  The rumor list is: {{{rumor_list}}} Check whether you believe them based on what you read and send.
   Try not to exactly repeat what others have said.
   Propose exactly one action (POST and CHECK) for yourself in the current round.
 
