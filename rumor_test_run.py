@@ -92,26 +92,26 @@ def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_in
         print(f'Timestamp {ts}')
         # Picks an agent at random
         i = random.randint(0, agent_count-1)
-        print(f'Pick agent {i} to act')
+        print(f'\nPick agent {i} to act')
         ag = agent_list[i]
         # Step 1: Generate response using ChatGPT api
         prompt = input_prompt_local_agent_DMAS_dialogue_func(ag['agent_name'], ag['agent_age'], ag['agent_job'], 
                                                                 ag['agent_traits'], ag['friends'],
                                                                 ag['agent_rumors_acc'], ag['agent_rumors_spread'],
-                                                                post_history[i], rumor_list,
+                                                                post_history[i], rumor_list, rumor_matrix[i],
                                                                 dialogue_history_method)
-        print(f'Feeding prompt to ChatGPT: \n{prompt}')
+        print(f'\nFeeding prompt to ChatGPT: \n{prompt}')
 
         # Process message
         messages=[{"role": "system", "content": "You are a helpful assistant."}]
         messages.append({"role": "user", "content": prompt})
 
         initial_response, token_num_count = GPT_response(messages,model_name)
-        print(f'Getting response from ChatGPT: \n{initial_response}')
+        print(f'\nGetting response from ChatGPT: \n{initial_response}')
         # Step 2: Post-process the requests
         post, check_list = analyze_input(initial_response)
         # Step 2a: Append History
-        print(f'Appending post: {post} to history')
+        print(f'\nAppending post: {post} to history')
         post_history[i] += f"{ag['agent_name']}: {post}\n"
         for friend in ag['friends']:
             print(f'Update to friend {friend}')
@@ -119,8 +119,14 @@ def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_in
 
         # Step 2b: Fact Check
         for ru in range(len(rumor_list)):
-            print(f"Agent {i} {ag['agent_name']} believes rumor {ru} {rumor_list[str(ru)]} is {check_list[ru]}")
+            print(f"\nAgent {i} {ag['agent_name']} believes rumor {ru} {rumor_list[str(ru)]} is {check_list[ru]}")
         rumor_matrix[i] = check_list
+
+        # Update the rumor list
+        with open(Saving_path+f'/rumor_matrix.txt', 'a') as file:
+            # Convert the matrix to a string format with newline character
+            np.savetxt(file, rumor_matrix, fmt='%d')
+            file.write('\n\n')
 
     return rumor_matrix
 
@@ -131,7 +137,7 @@ Saving_path = Code_dir_path + 'Env_Rumor_Test'
 model_name = 'gpt-4o'  #'gpt-4-0613', 'gpt-3.5-turbo-16k-0613' # 4o should be fine
 print(f'-------------------Model name: {model_name}-------------------')
 
-query_time_limit = 20
+query_time_limit = 25
 iterations = 1
 agent_count = 10
 num_of_initial_posts = 2
