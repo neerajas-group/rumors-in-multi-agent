@@ -12,7 +12,7 @@ def GPT_response(messages, model_name):
   for item in messages:
     token_num_count += len(enc.encode(item["content"]))
 
-  if model_name in ['gpt-4', 'gpt-4o', 'gpt-4-32k', 'gpt-3.5-turbo-0301', 'gpt-4-0613', 'gpt-4-32k-0613', 'gpt-3.5-turbo-16k-0613']:
+  if model_name in ['gpt-4', 'gpt-4o', 'gpt-4-32k', 'gpt-3.5-turbo-0301', 'gpt-4-0613', 'gpt-4-32k-0613', 'gpt-3.5-turbo-16k-0613', 'gpt-4o-mini-2024-07-18']:
     #print(f'-------------------Model name: {model_name}-------------------')
     client = OpenAI(
         # defaults to os.environ.get("OPENAI_API_KEY")
@@ -23,7 +23,7 @@ def GPT_response(messages, model_name):
       result = client.chat.completions.create(
         model=model_name,
         messages=messages,
-        temperature = 0.0,
+        temperature = 0.5,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0
@@ -33,7 +33,7 @@ def GPT_response(messages, model_name):
         result = client.chat.completions.create(
           model=model_name,
           messages=messages,
-          temperature=0.0,
+          temperature=0.5,
           top_p=1,
           frequency_penalty=0,
           presence_penalty=0
@@ -45,7 +45,7 @@ def GPT_response(messages, model_name):
           result = client.chat.completions.create(
             model=model_name,
             messages=messages,
-            temperature = 0.0,
+            temperature = 0.5,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0

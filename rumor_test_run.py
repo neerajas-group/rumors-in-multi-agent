@@ -10,6 +10,17 @@ import copy
 import numpy as np
 import shutil
 import time
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
+
+os.environ['PYTHONIOENCODING'] = 'utf-8'
+
+def safe_print(*args, **kwargs):
+    try:
+        print(*args, **kwargs)
+    except UnicodeEncodeError as e:
+        encoded_args = [str(arg).encode('utf-8', errors='replace').decode('utf-8') for arg in args]
+        print(*encoded_args, **kwargs)
 
 def analyze_input(text):
     # Using \s+ to handle multiple whitespaces and \s* to allow optional whitespace
@@ -40,7 +51,7 @@ def analyze_input(text):
 
     return post, check_list
 
-def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='_w_only_state_action_history', cen_decen_framework='DMAS', model_name = 'gpt-4o'):
+def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='_w_only_state_action_history', cen_decen_framework='DMAS', selection_policy = 'random', model_name = 'gpt-4o'):
     
     agent_dir = Saving_path
     agent_list = []
@@ -58,7 +69,7 @@ def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_in
 
     # Initialization of rumor list
     rumor_matrix = [[False for _ in range(len(rumor_list))] for __ in range(agent_count)]
-    print(rumor_matrix)
+    safe_print(rumor_matrix)
     # All posts list
     #beginning_list = {k: (rumor_list.get(k, '') + posts_list.get(k, '')).strip() for k in sorted(set(rumor_list) | set(posts_list))}    
     post_history = ['' for _ in range(agent_count)]
@@ -73,7 +84,7 @@ def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_in
         post_history[random_agent] += f'Random post: {random_rumor}\n'
         post_count[random_agent] += 1
 
-        print(f'Rumor {random_key}: {random_rumor} is assigned to Agent {random_agent}')
+        safe_print(f'Rumor {random_key}: {random_rumor} is assigned to Agent {random_agent}')
 
     # Assign random contents to agents
     for i in range(agent_count):
@@ -82,17 +93,22 @@ def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_in
             post_history[i] += f'Random post: {posts_list[random_key]}\n'
             post_count[i] += 1
 
-        print(f'Initialization for agent {i}, info: {agent_list[i]}\n Initial {post_count[i]} posts: {post_history[i]}')
+        safe_print(f'Initialization for agent {i}, info: {agent_list[i]}\n Initial {post_count[i]} posts: {post_history[i]}')
         
-    print('Initialization done!')
+    safe_print('Initialization done!')
 
     # for query_time_limit of timestamps
     for ts in range(query_time_limit):
-        print(f'\n===============================================================\n')
-        print(f'Timestamp {ts}')
+        safe_print(f'\n===============================================================\n')
+        safe_print(f'Timestamp {ts}')
         # Picks an agent at random
-        i = random.randint(0, agent_count-1)
-        print(f'\nPick agent {i} to act')
+        if selection_policy == 'random':
+            i = random.randint(0, agent_count-1)
+        elif selection_policy == 'more_friend_first':
+            weights = [len(agent['friends']) for agent in agent_list]
+            i = random.choices(range(len(agent_list)), weights=weights, k=1)[0]
+            
+        safe_print(f'\nPick agent {i} to act')
         ag = agent_list[i]
         # Step 1: Generate response using ChatGPT api
         prompt = input_prompt_local_agent_DMAS_dialogue_func(ag['agent_name'], ag['agent_age'], ag['agent_job'], 
@@ -100,26 +116,26 @@ def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_in
                                                                 ag['agent_rumors_acc'], ag['agent_rumors_spread'],
                                                                 post_history[i], rumor_list, rumor_matrix[i],
                                                                 dialogue_history_method)
-        print(f'\nFeeding prompt to ChatGPT: \n{prompt}')
+        safe_print(f'\nFeeding prompt to ChatGPT: \n{prompt}')
 
         # Process message
         messages=[{"role": "system", "content": "You are a helpful assistant."}]
         messages.append({"role": "user", "content": prompt})
 
         initial_response, token_num_count = GPT_response(messages,model_name)
-        print(f'\nGetting response from ChatGPT: \n{initial_response}')
+        safe_print(f'\nGetting response from ChatGPT: \n{initial_response}')
         # Step 2: Post-process the requests
         post, check_list = analyze_input(initial_response)
         # Step 2a: Append History
-        print(f'\nAppending post: {post} to history')
+        safe_print(f'\nAppending post: {post} to history')
         post_history[i] += f"{ag['agent_name']}: {post}\n"
         for friend in ag['friends']:
-            print(f'Update to friend {friend}')
+            safe_print(f'Update to friend {friend}')
             post_history[friend] += f"{ag['agent_name']}: {post}\n"
 
         # Step 2b: Fact Check
         for ru in range(len(rumor_list)):
-            print(f"\nAgent {i} {ag['agent_name']} believes rumor {ru} {rumor_list[str(ru)]} is {check_list[ru]}")
+            safe_print(f"\nAgent {i} {ag['agent_name']} believes rumor {ru} {rumor_list[str(ru)]} is {check_list[ru]}")
         rumor_matrix[i] = check_list
 
         # Update the rumor list
@@ -130,27 +146,27 @@ def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_in
 
     return rumor_matrix
 
-random.seed(4242) #萬世一系ノ宇宙ノ真理ノ種
+random.seed(66) #萬世一系ノ宇宙ノ真理ノ種
 
 Code_dir_path = 'path_to_multi-agent-framework/multi-agent-framework/' # Put the current code directory path here
 Saving_path = Code_dir_path + 'Env_Rumor_Test'
-model_name = 'gpt-4o'  #'gpt-4-0613', 'gpt-3.5-turbo-16k-0613' # 4o should be fine
-print(f'-------------------Model name: {model_name}-------------------')
+model_name = 'gpt-4o-mini-2024-07-18'  #'gpt-4-0613', 'gpt-3.5-turbo-16k-0613' # 4o should be fine
+safe_print(f'-------------------Model name: {model_name}-------------------')
 
-query_time_limit = 25
+query_time_limit = 300
 iterations = 1
-agent_count = 10
+agent_count = 100
 num_of_initial_posts = 2
 
 for iteration_num in range(iterations):
-    print('-------###-------###-------###-------')
-    print(f'Iteration num is: {iteration_num}\n\n')
+    safe_print('-------###-------###-------###-------')
+    safe_print(f'Iteration num is: {iteration_num}\n\n')
     #user_prompt_list, response_total_list, pg_state_list, success_failure, index_query_times, token_num_count_list, Saving_path_result 
     rumor_matrix = run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='_w_only_state_action_history',
             #cen_decen_framework='HMAS-2', model_name = model_name)
-            cen_decen_framework='DMAS', model_name = model_name)
+            cen_decen_framework='DMAS', selection_policy ='more_friend_first', model_name = model_name)
 
-    print(f'Done')
+    safe_print(f'Done')
     '''
     with open(Saving_path_result + '/token_num_count.txt', 'w') as f:
         for token_num_num_count in token_num_count_list:
@@ -161,7 +177,7 @@ for iteration_num in range(iterations):
 
     with open(Saving_path_result + '/env_action_times.txt', 'w') as f:
         f.write(f'{index_query_times+1}')
-    print(success_failure)
-    print(f'Iteration number: {index_query_times+1}')
+    safe_print(success_failure)
+    safe_print(f'Iteration number: {index_query_times+1}')
     '''
 
