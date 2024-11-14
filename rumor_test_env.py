@@ -76,30 +76,120 @@ def read_facebook_network(id):
 def create_random_posts_test(num = 10):
 
   posts_list = {
-    0: 'Had the best cup of coffee this morning; it made my day!',
-    1: 'Spent the afternoon reading a good book by the park.',
-    2: 'The sound of rain is so calming. Perfect weather to stay in and relax.',
-    3: 'Today is a lovely day for a long walk around the neighborhood.',
-    4: 'Tried a new recipe today, and it actually turned out amazing!',
-    5: 'Nothing beats the smell of fresh bread from a local bakery.',
-    6: 'Ran into an old friend today—totally made my week!',
-    7: 'Started journaling again; it feels good to put thoughts on paper.',
-    8: 'Took my dog for a walk by the lake; he was so happy to explore.',
-    9: 'Found a cozy little café around the corner; it might be my new favorite spot.',
-    10: 'Ended the day with a gorgeous sunset. Feeling grateful.',
-    11: 'Finally organized my closet; it feels like a fresh start!',
-    12: 'Caught a beautiful sunrise this morning. Worth getting up early for!',
-    13: 'Met a stranger who gave me great advice without even realizing it.',
-    14: 'Tried painting for the first time—turns out it’s really relaxing!',
-    15: 'Went for a bike ride around town; felt like a mini adventure.',
-    16: 'Cooked dinner with friends; nothing beats a good meal and laughter.',
-    17: 'Spent the afternoon at a museum. So inspiring to see all that art.',
-    18: 'Found an old photo album today—brought back so many memories!',
-    19: 'Did a random act of kindness today; feels good to brighten someone’s day.',
-    20: 'Took a break from screens and went for a nature walk. Much needed!'
+      0: 'Had the best cup of coffee this morning; it made my day!',
+      1: 'Spent the afternoon reading a good book by the park.',
+      2: 'The sound of rain is so calming. Perfect weather to stay in and relax.',
+      3: 'Today is a lovely day for a long walk around the neighborhood.',
+      4: 'Tried a new recipe today, and it actually turned out amazing!',
+      5: 'Nothing beats the smell of fresh bread from a local bakery.',
+      6: 'Ran into an old friend today—totally made my week!',
+      7: 'Started journaling again; it feels good to put thoughts on paper.',
+      8: 'Took my dog for a walk by the lake; he was so happy to explore.',
+      9: 'Found a cozy little café around the corner; it might be my new favorite spot.',
+      10: 'Ended the day with a gorgeous sunset. Feeling grateful.',
+      11: 'Finally organized my closet; it feels like a fresh start!',
+      12: 'Caught a beautiful sunrise this morning. Worth getting up early for!',
+      13: 'Met a stranger who gave me great advice without even realizing it.',
+      14: 'Tried painting for the first time—turns out it’s really relaxing!',
+      15: 'Went for a bike ride around town; felt like a mini adventure.',
+      16: 'Cooked dinner with friends; nothing beats a good meal and laughter.',
+      17: 'Spent the afternoon at a museum. So inspiring to see all that art.',
+      18: 'Found an old photo album today—brought back so many memories!',
+      19: 'Did a random act of kindness today; feels good to brighten someone’s day.',
+      20: 'Took a break from screens and went for a nature walk. Much needed!',
+      21: 'Watched an old movie that reminded me of my childhood. Nostalgia overload!',
+      22: 'Planted some flowers in the garden; can’t wait to see them bloom.',
+      23: 'Learned a new word today and used it in a conversation. Feels rewarding!',
+      24: 'Cleaned up my workspace, and now I feel so much more productive.',
+      25: 'Spent time stargazing tonight; the sky was absolutely breathtaking.',
+      26: 'Had a great conversation with a family member I don’t see often.',
+      27: 'Visited a local farmer’s market and bought the freshest produce.',
+      28: 'Listened to my favorite album from start to finish. What a mood lifter!',
+      29: 'Tried yoga for the first time—my body feels so stretched and relaxed.',
+      30: 'Found a handwritten letter from years ago; what a special moment.',
+      31: 'Had a spontaneous dance party in the living room. Pure joy!',
+      32: 'Spent the day volunteering; it’s incredible how rewarding helping others can be.',
+      33: 'Picked up a new hobby today—let’s see how long this one lasts!',
+      34: 'Made a playlist of songs from my favorite decade. Instant good vibes!',
+      35: 'Went to the library and discovered a hidden gem of a book.',
+      36: 'Caught a rainbow after the rain; what a magical moment.',
+      37: 'Had an interesting chat with a stranger about life and dreams.',
+      38: 'Tried a unique dessert today—surprisingly delicious!',
+      39: 'Went for a drive with no destination in mind; sometimes it’s about the journey.',
+      40: 'Wrote a thank-you note to someone who’s been kind to me.',
+      41: 'Sat by the fireplace with a cup of hot chocolate. Cozy vibes all around.',
+      42: 'Visited a nearby town I’ve never explored before; it felt like a mini vacation.',
+      43: 'Caught up on a podcast I’ve been meaning to listen to. Learned so much!',
+      44: 'Helped a neighbor carry their groceries. A small act but it felt good.',
+      45: 'Went to a comedy show and laughed until my cheeks hurt.',
+      46: 'Rearranged my living room—it feels like a whole new space now.',
+      47: 'Took a nap in the afternoon and woke up feeling refreshed.',
+      48: 'Spent the evening sketching; I’m not an artist, but it was fun!',
+      49: 'Had a heartfelt phone call with an old friend. So much love and gratitude.',
   }
 
+
   return {i: posts_list[i] for i in range(min(num, len(posts_list)))}
+
+def env_create_agent_test_facebook(Saving_path, id = 686):
+  with open('agents_170.json', 'r') as file:
+    agent_list = json.load(file)
+
+  dir = 'facebook'
+  edges_path = f'{dir}/{id}.edges'
+  with open(edges_path, 'r') as file:
+      edges = [tuple(map(int, line.strip().split())) for line in file]
+
+  # Create a Graph using NetworkX
+  G = nx.Graph()
+  G.add_edges_from(edges)
+
+  # Check the number of nodes and edges
+  print("Number of nodes:", G.number_of_nodes())
+  print("Number of edges:", G.number_of_edges())
+
+  mapping = {old_label: new_label for new_label, old_label in enumerate(G.nodes)}
+  G = nx.relabel_nodes(G, mapping)
+
+  count = 0
+  for node in G.nodes:
+      #print(node)
+      G.nodes[node]['label'] = agent_list[str(count)]['agent_name']
+      count += 1
+
+  # Plot the graph
+  plt.figure(figsize=(8, 6))
+  pos = nx.spring_layout(G, seed=42)
+  nx.draw(G, pos, with_labels=True, labels=nx.get_node_attributes(G, 'label'), node_color='skyblue', node_size=500, edge_color='k', font_weight='bold')
+  plt.title('Social Network')
+  plt.savefig(f"Social_Graph_FB_{id}.png")
+  plt.show()
+
+  # Save the graph
+  file_path = f"Social_Graph_FB_{id}.graphml"
+  nx.write_graphml(G, file_path)
+
+  # Update agents with their friends list and save their data
+  for i in range(G.number_of_nodes()):
+      
+    agent = agent_list[str(i)]
+
+    friends = list(G.neighbors(i))
+    agent['friends'] = friends
+
+    #Test
+    #agent['agent_rumors_acc'] = '1'
+    #agent['agent_rumors_spread'] = '1'
+
+    if not os.path.exists(Saving_path+f'/agent_{i}'):
+      os.makedirs(Saving_path+f'/agent_{i}', exist_ok=True)
+    else:
+      shutil.rmtree(Saving_path+f'/agent_{i}')
+      os.makedirs(Saving_path+f'/agent_{i}', exist_ok=True)
+
+    with open(Saving_path+f'/agent_{i}/agent_{i}.json', 'w') as f:
+        json.dump(agent, f, indent = 4, cls=NumpyEncoder)
+
 
 def env_create_agent_test_sc(num, Saving_path):
   with open('agents_100.json', 'r') as file:
@@ -333,7 +423,26 @@ def create_env2(Saving_path): # Scale Free 20
   with open(Saving_path+f'/rumor_list.json', 'w') as f:
     json.dump(rumor_list, f, indent = 4, cls=NumpyEncoder)
 
-  posts_list = create_random_posts_test()
+  posts_list = create_random_posts_test(20)
+  with open(Saving_path+f'/posts_list.json', 'w') as f:
+    json.dump(posts_list, f, indent = 4, cls=NumpyEncoder)
+
+def create_env_fb(Saving_path, id = 686): # Scale Free 20
+  if not os.path.exists(Saving_path):
+    os.makedirs(Saving_path, exist_ok=True)
+  else:
+    shutil.rmtree(Saving_path)
+    os.makedirs(Saving_path, exist_ok=True)
+
+  # Define each agent and his/her/their relations
+  env_create_agent_test_facebook(Saving_path, id = id)
+
+  # Create list of rumors and posts
+  rumor_list = create_rumors_test()
+  with open(Saving_path+f'/rumor_list.json', 'w') as f:
+    json.dump(rumor_list, f, indent = 4, cls=NumpyEncoder)
+
+  posts_list = create_random_posts_test(50)
   with open(Saving_path+f'/posts_list.json', 'w') as f:
     json.dump(posts_list, f, indent = 4, cls=NumpyEncoder)
   
@@ -343,8 +452,9 @@ def main():
   Saving_path = Code_dir_path + 'Env_Rumor_Test'
   
   # The first time to create the environment, after that you can comment it
-  create_env2(Saving_path)
-  #G = read_facebook_network(0)
+  #create_env2(Saving_path)
+  #G = read_facebook_network(686)
+  create_env_fb(Saving_path, 686)
 
 if __name__ == "__main__":
   main()

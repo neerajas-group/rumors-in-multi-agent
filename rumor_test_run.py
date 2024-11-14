@@ -153,9 +153,9 @@ Saving_path = Code_dir_path + 'Env_Rumor_Test'
 model_name = 'gpt-4o-mini-2024-07-18'  #'gpt-4-0613', 'gpt-3.5-turbo-16k-0613' # 4o should be fine
 safe_print(f'-------------------Model name: {model_name}-------------------')
 
-query_time_limit = 300
+query_time_limit = 500
 iterations = 1
-agent_count = 100
+agent_count = 168
 num_of_initial_posts = 2
 
 for iteration_num in range(iterations):

@@ -14,7 +14,7 @@ likely_to_accept_rumors = {
 
 likely_to_forward_rumors = {
     '1': "prefer not to spread much of the new information seen in others' posts",
-    '2': "may forward posts seen without adding personal comments or feelings, or may just share personal experiences",
+    '2': "may forward posts seen with comments and feelings, or may just share personal experiences",
     '3': "are willing to share and comment on rumors, posts, and new things seen in posts",
 }
 
@@ -41,16 +41,19 @@ Inputs:
 def input_prompt_local_agent_DMAS_dialogue_func(agent_name, agent_age, agent_job, agent_traits,
                                                 friend_list,
                                                 agent_rumors_acc, agent_rumors_spread,
-                                                post_history, rumor_list,
+                                                post_history, rumor_list, rumor_believe_list,
                                                 dialogue_history_method):
-
+#  It can be something you've read in other posts,
+#  something about your job or day, or a simple greeting.
   user_prompt_1 = f'''
   Hi, {agent_name}, you are a {agent_age}-year-old {agent_job} known for being {agent_traits}. Please follow the instructions below.
   You are active on a social network, receiving and sending posts. 
   You {likely_to_accept_rumors[agent_rumors_acc]}, and you {likely_to_forward_rumors[agent_rumors_spread]}.
-  Read through the post history, especially the new posts. Your posts can be seen by all your friends. Here are your friends: {{{friend_list}}}
-  You are about to send a new post [POST] based on your personal preferences. It can be something you've read in other posts,
-  something about your job or day, or a simple greeting.
+  Read through the post history, especially the new posts. It can be something you've read in other posts but you need to rephase it your personality.
+  You can criticize the posts if you don't agree with them, or you can simply share your own life experiences if you prefer not to forward the posts.
+  Your posts can be seen by all your friends. Here are your friends: {{{friend_list}}}
+  You are about to send a new post [POST] based on your personal preferences. 
+
 
   After posting, you will review a list of rumors and decide [CHECK] whether to believe or reject each one. Be honest: if your post mentions a rumor,
   your response must be consistent with what you posted.
@@ -71,7 +74,18 @@ def input_prompt_local_agent_DMAS_dialogue_func(agent_name, agent_age, agent_job
   CHECK
   False COVID-19 now named as COVID-114514.
   False Donald Trump will be president of Greece.
+  
+  '''
 
+  if sum(rumor_believe_list) == 0:
+    pass
+  else:
+    user_prompt_1 += 'Before you reviewing the posts, you used to believe:\n'
+    for i in range(len(rumor_believe_list)):
+      if rumor_believe_list[i]:
+        user_prompt_1 += f'You used to believe {rumor_list[str(i)]} is True\n'
+
+  user_prompt_1 += f'''
   The previous post history is: {{{post_history}}}
   Think step-by-step about the task. Be careful not to let the rumor list affect your judgment on post history.
   You CANNOT post the information from the rumor list but NOT in your post history.
