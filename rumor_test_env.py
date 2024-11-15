@@ -13,7 +13,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import pandas as pd
 
-NUM_OF_AGENTS = 10
+NUM_OF_AGENTS = 100
 
 class NumpyEncoder(json.JSONEncoder):
     """ Custom encoder for numpy data types """
@@ -30,9 +30,9 @@ class NumpyEncoder(json.JSONEncoder):
 def create_rumors_test():
 
   rumor_list = {
-      0: 'Nicolae Ceausescu became a Chinese citizen and escaped.',
+      0: 'Nicolae Ceausescu is not died!',
       3: 'A living dinosaur is found in Yellowstone National Park.',
-      2: 'Large Language Models are fake; they are actually manned by real people acting as agents.',
+      2: 'Large Language Models are manned by real people acting as agents.',
       1: 'Drinking 3 ale a day can heal the cancer!',
   }
 
@@ -254,8 +254,114 @@ def env_create_agent_test_sc(num, Saving_path):
     with open(Saving_path+f'/agent_{i}/agent_{i}.json', 'w') as f:
         json.dump(agent, f, indent = 4, cls=NumpyEncoder)
 
-  
+def env_create_agent_test_random(num, Saving_path):
+  with open('agents_100.json', 'r') as file:
+    agent_list = json.load(file)
 
+  # Relation Graph
+  G = nx.Graph()
+  for i in range(num):
+    G.add_node(i, label=agent_list[str(i)]['agent_name'])
+
+  # Add fully connected subgraph among the first 3 nodes
+  for i in range(4):
+      for j in range(i+1, 4):
+          G.add_edge(i, j)
+
+  # Add edges based on preferential attachment
+  j = 4
+  np.random.seed(66)
+  edge_num = 0
+  p = 0.6
+  while edge_num < 390:
+    u, v = random.sample(list(G.nodes()), 2)
+
+    if not G.has_edge(u, v):
+      if random.random() < p:
+        G.add_edge(u, v)
+        edge_num += 1
+
+  # Plot the graph
+  plt.figure(figsize=(8, 6))
+  pos = nx.spring_layout(G, seed=42)
+  nx.draw(G, pos, with_labels=True, labels=nx.get_node_attributes(G, 'label'), node_color='skyblue', node_size=500, edge_color='k', font_weight='bold')
+  plt.title('Social Network')
+  plt.savefig("Social_Graph_2.png")
+  plt.show()
+
+  # Save the graph
+  file_path = "Social_Graph_2.graphml"
+  nx.write_graphml(G, file_path)
+
+  # Update agents with their friends list and save their data
+  for i in range(num):
+      
+    agent = agent_list[str(i)]
+
+    friends = list(G.neighbors(i))
+    agent['friends'] = friends
+
+    #Test
+    #agent['agent_rumors_acc'] = '1'
+    #agent['agent_rumors_spread'] = '1'
+
+    if not os.path.exists(Saving_path+f'/agent_{i}'):
+      os.makedirs(Saving_path+f'/agent_{i}', exist_ok=True)
+    else:
+      shutil.rmtree(Saving_path+f'/agent_{i}')
+      os.makedirs(Saving_path+f'/agent_{i}', exist_ok=True)
+
+    with open(Saving_path+f'/agent_{i}/agent_{i}.json', 'w') as f:
+        json.dump(agent, f, indent = 4, cls=NumpyEncoder)
+
+def env_create_agent_test_small_world(num, Saving_path):
+  with open('agents_100.json', 'r') as file:
+    agent_list = json.load(file)
+
+  np.random.seed(66)
+
+  # Generate a small-world network using the Watts-Strogatz model.
+
+  nearest_neighbors = 4  # Each node is connected to 4 nearest neighbors
+  rewiring_prob = 0.3
+  G = nx.watts_strogatz_graph(num, nearest_neighbors, rewiring_prob)
+
+  agent_list = {str(i): {'agent_name': f'Agent_{i}'} for i in range(n)}
+  for i in range(n):
+      G.nodes[i]['label'] = agent_list[str(i)]['agent_name']
+
+  # Plot the graph
+  plt.figure(figsize=(8, 6))
+  pos = nx.spring_layout(G, seed=42)
+  nx.draw(G, pos, with_labels=True, labels=nx.get_node_attributes(G, 'label'), node_color='skyblue', node_size=500, edge_color='k', font_weight='bold')
+  plt.title('Social Network')
+  plt.savefig("Social_Graph_2.png")
+  plt.show()
+
+  # Save the graph
+  file_path = "Social_Graph_2.graphml"
+  nx.write_graphml(G, file_path)
+
+  # Update agents with their friends list and save their data
+  for i in range(num):
+      
+    agent = agent_list[str(i)]
+
+    friends = list(G.neighbors(i))
+    agent['friends'] = friends
+
+    #Test
+    #agent['agent_rumors_acc'] = '1'
+    #agent['agent_rumors_spread'] = '1'
+
+    if not os.path.exists(Saving_path+f'/agent_{i}'):
+      os.makedirs(Saving_path+f'/agent_{i}', exist_ok=True)
+    else:
+      shutil.rmtree(Saving_path+f'/agent_{i}')
+      os.makedirs(Saving_path+f'/agent_{i}', exist_ok=True)
+
+    with open(Saving_path+f'/agent_{i}/agent_{i}.json', 'w') as f:
+        json.dump(agent, f, indent = 4, cls=NumpyEncoder)
 
 def env_create_agent_test(num, Saving_path):
   agent_list = {
