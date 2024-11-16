@@ -51,7 +51,7 @@ def analyze_input(text):
 
     return post, check_list
 
-def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='_w_only_state_action_history', cen_decen_framework='DMAS', selection_policy = 'random', model_name = 'gpt-4o'):
+def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='_w_only_state_action_history', cen_decen_framework='DMAS', selection_policy = 'random', patient_zero_policy = 'random', model_name = 'gpt-4o'):
     
     agent_dir = Saving_path
     agent_list = []
@@ -77,14 +77,27 @@ def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_in
 
     # Assign rumors to random agent's history
     rumor_list_copy = rumor_list.copy()
-    while rumor_list_copy:
-        random_agent = random.randint(0, agent_count-1)
-        random_key = random.choice(list(rumor_list_copy.keys()))
-        random_rumor = rumor_list_copy.pop(random_key)
-        post_history[random_agent] += f'Random post: {random_rumor}\n'
-        post_count[random_agent] += 1
 
-        safe_print(f'Rumor {random_key}: {random_rumor} is assigned to Agent {random_agent}')
+    if patient_zero_policy == 'random':
+        while rumor_list_copy:
+            random_agent = random.randint(0, agent_count-1)
+            random_key = random.choice(list(rumor_list_copy.keys()))
+            random_rumor = rumor_list_copy.pop(random_key)
+            post_history[random_agent] += f'Random post: {random_rumor}\n'
+            post_count[random_agent] += 1
+
+            safe_print(f'Rumor {random_key}: {random_rumor} is assigned to Agent {random_agent}')
+
+    elif patient_zero_policy == 'more_friend_first':
+        while rumor_list_copy:  
+            weights = [len(agent['friends']) for agent in agent_list]
+            # Find the index of the agent with the maximum number of friends
+            top_agent = weights.index(max(weights))
+            random_key = random.choice(list(rumor_list_copy.keys()))
+            random_rumor = rumor_list_copy.pop(random_key)
+            post_history[top_agent] += f'Random post: {random_rumor}\n'
+            post_count[top_agent] += 1
+            weights.pop(top_agent)
 
     # Assign random contents to agents
     for i in range(agent_count):
@@ -146,7 +159,7 @@ def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_in
 
     return rumor_matrix
 
-random.seed(66) #萬世一系ノ宇宙ノ真理ノ種
+random.seed(66) #萬世一系ノ宇宙ノ真理ノ種 4242
 
 Code_dir_path = 'path_to_multi-agent-framework/multi-agent-framework/' # Put the current code directory path here
 Saving_path = Code_dir_path + 'Env_Rumor_Test'
@@ -155,7 +168,7 @@ safe_print(f'-------------------Model name: {model_name}-------------------')
 
 query_time_limit = 500
 iterations = 1
-agent_count = 168
+agent_count = 100
 num_of_initial_posts = 2
 
 for iteration_num in range(iterations):
@@ -164,7 +177,7 @@ for iteration_num in range(iterations):
     #user_prompt_list, response_total_list, pg_state_list, success_failure, index_query_times, token_num_count_list, Saving_path_result 
     rumor_matrix = run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='_w_only_state_action_history',
             #cen_decen_framework='HMAS-2', model_name = model_name)
-            cen_decen_framework='DMAS', selection_policy ='more_friend_first', model_name = model_name)
+            cen_decen_framework='DMAS', selection_policy = 'more_friend_first', patient_zero_policy = 'more_friend_first', model_name = model_name)
 
     safe_print(f'Done')
     '''

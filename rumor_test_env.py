@@ -226,11 +226,11 @@ def env_create_agent_test_sc(num, Saving_path):
   pos = nx.spring_layout(G, seed=42)
   nx.draw(G, pos, with_labels=True, labels=nx.get_node_attributes(G, 'label'), node_color='skyblue', node_size=500, edge_color='k', font_weight='bold')
   plt.title('Social Network')
-  plt.savefig("Social_Graph_2.png")
+  plt.savefig("Social_Graph_sc.png")
   plt.show()
 
   # Save the graph
-  file_path = "Social_Graph_2.graphml"
+  file_path = "Social_Graph_sc.graphml"
   nx.write_graphml(G, file_path)
 
   # Update agents with their friends list and save their data
@@ -286,11 +286,11 @@ def env_create_agent_test_random(num, Saving_path):
   pos = nx.spring_layout(G, seed=42)
   nx.draw(G, pos, with_labels=True, labels=nx.get_node_attributes(G, 'label'), node_color='skyblue', node_size=500, edge_color='k', font_weight='bold')
   plt.title('Social Network')
-  plt.savefig("Social_Graph_2.png")
+  plt.savefig("Social_Graph_random.png")
   plt.show()
 
   # Save the graph
-  file_path = "Social_Graph_2.graphml"
+  file_path = "Social_Graph_random.graphml"
   nx.write_graphml(G, file_path)
 
   # Update agents with their friends list and save their data
@@ -326,20 +326,19 @@ def env_create_agent_test_small_world(num, Saving_path):
   rewiring_prob = 0.3
   G = nx.watts_strogatz_graph(num, nearest_neighbors, rewiring_prob)
 
-  agent_list = {str(i): {'agent_name': f'Agent_{i}'} for i in range(n)}
-  for i in range(n):
-      G.nodes[i]['label'] = agent_list[str(i)]['agent_name']
+  for i in range(num):
+    G.nodes[i]['label'] = agent_list[str(i)]['agent_name']
 
   # Plot the graph
   plt.figure(figsize=(8, 6))
   pos = nx.spring_layout(G, seed=42)
   nx.draw(G, pos, with_labels=True, labels=nx.get_node_attributes(G, 'label'), node_color='skyblue', node_size=500, edge_color='k', font_weight='bold')
   plt.title('Social Network')
-  plt.savefig("Social_Graph_2.png")
+  plt.savefig("Social_Graph_sw.png")
   plt.show()
 
   # Save the graph
-  file_path = "Social_Graph_2.graphml"
+  file_path = "Social_Graph_sw.graphml"
   nx.write_graphml(G, file_path)
 
   # Update agents with their friends list and save their data
@@ -503,7 +502,7 @@ def create_env1(Saving_path): # Random 10
     os.makedirs(Saving_path, exist_ok=True)
 
   # Define each agent and his/her/their relations
-  env_create_agent_test(NUM_OF_AGENTS, Saving_path)
+  env_create_agent_test_random(NUM_OF_AGENTS, Saving_path)
 
   # Create list of rumors and posts
   rumor_list = create_rumors_test()
@@ -523,6 +522,25 @@ def create_env2(Saving_path): # Scale Free 20
 
   # Define each agent and his/her/their relations
   env_create_agent_test_sc(100, Saving_path)
+
+  # Create list of rumors and posts
+  rumor_list = create_rumors_test()
+  with open(Saving_path+f'/rumor_list.json', 'w') as f:
+    json.dump(rumor_list, f, indent = 4, cls=NumpyEncoder)
+
+  posts_list = create_random_posts_test(20)
+  with open(Saving_path+f'/posts_list.json', 'w') as f:
+    json.dump(posts_list, f, indent = 4, cls=NumpyEncoder)
+
+def create_env3(Saving_path): # Scale Free 20
+  if not os.path.exists(Saving_path):
+    os.makedirs(Saving_path, exist_ok=True)
+  else:
+    shutil.rmtree(Saving_path)
+    os.makedirs(Saving_path, exist_ok=True)
+
+  # Define each agent and his/her/their relations
+  env_create_agent_test_small_world(100, Saving_path)
 
   # Create list of rumors and posts
   rumor_list = create_rumors_test()
@@ -558,9 +576,9 @@ def main():
   Saving_path = Code_dir_path + 'Env_Rumor_Test'
   
   # The first time to create the environment, after that you can comment it
-  #create_env2(Saving_path)
+  create_env2(Saving_path)
   #G = read_facebook_network(686)
-  create_env_fb(Saving_path, 686)
+  #create_env_fb(Saving_path, 686)
 
 if __name__ == "__main__":
   main()

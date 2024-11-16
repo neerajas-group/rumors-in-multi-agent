@@ -50,7 +50,7 @@ def input_prompt_local_agent_DMAS_dialogue_func(agent_name, agent_age, agent_job
   You are active on a social network, receiving and sending posts. 
   You {likely_to_accept_rumors[agent_rumors_acc]}, and you {likely_to_forward_rumors[agent_rumors_spread]}.
   Read through the post history, especially the new posts. It can be something you've read in other posts but you need to rephase it your personality.
-  You can criticize the posts if you don't agree with them, or you can simply share your own life experiences if you prefer not to forward the posts.
+  You can criticize the posts if you don't agree with them, you can also repeat them or express in your own way.
   Your posts can be seen by all your friends. Here are your friends: {{{friend_list}}}
   You are about to send a new post [POST] based on your personal preferences. 
 
