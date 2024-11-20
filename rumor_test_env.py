@@ -30,7 +30,7 @@ class NumpyEncoder(json.JSONEncoder):
 def create_rumors_test():
 
   rumor_list = {
-      0: 'Nicolae Ceausescu is not died!',
+      0: 'Nicolae Ceausescu does not died!',
       3: 'A living dinosaur is found in Yellowstone National Park.',
       2: 'Large Language Models are manned by real people acting as agents.',
       1: 'Drinking 3 ale a day can heal the cancer!',
@@ -169,6 +169,8 @@ def env_create_agent_test_facebook(Saving_path, id = 686):
   file_path = f"Social_Graph_FB_{id}.graphml"
   nx.write_graphml(G, file_path)
 
+  degrees = {i: len(list(G.neighbors(i))) for i in range(G.number_of_nodes())}
+  top_5_agents = sorted(degrees, key=degrees.get, reverse=True)[:5]
   # Update agents with their friends list and save their data
   for i in range(G.number_of_nodes()):
       
@@ -180,6 +182,10 @@ def env_create_agent_test_facebook(Saving_path, id = 686):
     #Test
     #agent['agent_rumors_acc'] = '1'
     #agent['agent_rumors_spread'] = '1'
+
+    if i in top_5_agents:
+        agent['agent_rumors_acc'] = '4'
+        agent['agent_rumors_spread'] = '3'
 
     if not os.path.exists(Saving_path+f'/agent_{i}'):
       os.makedirs(Saving_path+f'/agent_{i}', exist_ok=True)
@@ -233,6 +239,9 @@ def env_create_agent_test_sc(num, Saving_path):
   file_path = "Social_Graph_sc.graphml"
   nx.write_graphml(G, file_path)
 
+  # Test: manually define values for top 5 nodes
+  degrees = {i: len(list(G.neighbors(i))) for i in range(num)}
+  top_5_agents = sorted(degrees, key=degrees.get, reverse=True)[:5]
   # Update agents with their friends list and save their data
   for i in range(num):
       
@@ -242,8 +251,12 @@ def env_create_agent_test_sc(num, Saving_path):
     agent['friends'] = friends
 
     #Test
-    #agent['agent_rumors_acc'] = '1'
-    #agent['agent_rumors_spread'] = '1'
+    #agent['agent_rumors_acc'] = '1' # Max 4
+    #agent['agent_rumors_spread'] = '1' # Max 3
+
+    if i in top_5_agents:
+        agent['agent_rumors_acc'] = '4'
+        agent['agent_rumors_spread'] = '3'
 
     if not os.path.exists(Saving_path+f'/agent_{i}'):
       os.makedirs(Saving_path+f'/agent_{i}', exist_ok=True)
@@ -350,6 +363,7 @@ def env_create_agent_test_small_world(num, Saving_path):
     agent['friends'] = friends
 
     #Test
+    #if 
     #agent['agent_rumors_acc'] = '1'
     #agent['agent_rumors_spread'] = '1'
 

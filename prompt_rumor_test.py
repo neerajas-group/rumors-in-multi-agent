@@ -98,42 +98,13 @@ def input_prompt_local_agent_DMAS_dialogue_func(agent_name, agent_age, agent_job
   token_num_count = len(enc.encode(user_prompt_1))
   print(f'Number of Token in the request: {token_num_count}')
 
-  if dialogue_history_method == '_wo_any_dialogue_history':
+  if dialogue_history_method == 'all_history':
     pass
 
-  '''
-  elif dialogue_history_method in ('_w_only_state_action_history', '_w_compressed_dialogue_history', '_w_all_dialogue_history'):
-    if dialogue_history_method == '_w_only_state_action_history':
-      state_action_prompt = ''
-      for i in range(len(response_total_list) - 1, -1, -1):
-        state_action_prompt_next = f'State{i + 1}: {pg_state_list[i]}\nAction{i + 1}: {response_total_list[i]}\n\n' + state_action_prompt
-        if token_num_count + len(enc.encode(state_action_prompt_next)) < input_prompt_token_limit:
-          state_action_prompt = state_action_prompt_next
-        else:
-          break
-    elif dialogue_history_method == '_w_compressed_dialogue_history':
-      state_action_prompt = ''
-      for i in range(len(response_total_list) - 1, -1, -1):
-        dialogue_summary = LLM_summarize_func(dialogue_history_list[i])
-        state_action_prompt_next = f'State{i + 1}: {pg_state_list[i]}\nSummary of Dialogues in each step{i + 1}: {dialogue_summary}\nAction{i + 1}: {response_total_list[i]}\n\n' + state_action_prompt
-        #state_action_prompt_next = LLM_summarize_func(state_action_prompt_next_initial)
-        if token_num_count + len(enc.encode(state_action_prompt_next)) < input_prompt_token_limit:
-          state_action_prompt = state_action_prompt_next
-        else:
-          break
-    elif dialogue_history_method == '_w_all_dialogue_history':
-      state_action_prompt = ''
-      for i in range(len(response_total_list) - 1, -1, -1):
-        state_action_prompt_next = f'State{i + 1}: {pg_state_list[i]}\nDialogue{i + 1}: {dialogue_history_list[i]}\nAction{i + 1}: {response_total_list[i]}\n\n' + state_action_prompt
-        if token_num_count + len(enc.encode(state_action_prompt_next)) < input_prompt_token_limit:
-          state_action_prompt = state_action_prompt_next
-        else:
-          break
-    '''
   return user_prompt_1
 
 def message_construct_func(user_prompt_list, response_total_list, dialogue_history_method):
-  if f'{dialogue_history_method}' == '_w_all_dialogue_history':
+  if f'{dialogue_history_method}' == 'TODO_2_history':
     messages=[{"role": "system", "content": "You are a helpful assistant."}]
     #print('length of user_prompt_list', len(user_prompt_list))
     for i in range(len(user_prompt_list)):
@@ -141,7 +112,7 @@ def message_construct_func(user_prompt_list, response_total_list, dialogue_histo
       if i < len(user_prompt_list)-1:
         messages.append({"role": "assistant", "content": response_total_list[i]})
     #print('Length of messages', len(messages))
-  elif f'{dialogue_history_method}' in ('_wo_any_dialogue_history', '_w_only_state_action_history'):
+  elif f'{dialogue_history_method}' in ('TODO_history', 'all_history'):
     messages=[{"role": "system", "content": "You are a helpful assistant."}]
     messages.append({"role": "user", "content": user_prompt_list[-1]})
     #print('Length of messages', len(messages))

@@ -49,9 +49,13 @@ def analyze_input(text):
         # Parse boolean value
         check_list.append(line.startswith('True'))
 
+    # Temp solution
+    while len(check_list) < 4:
+        check_list.append('False')
+
     return post, check_list
 
-def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='_w_only_state_action_history', cen_decen_framework='DMAS', selection_policy = 'random', patient_zero_policy = 'random', model_name = 'gpt-4o'):
+def run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='all_history', selection_policy = 'random', patient_zero_policy = 'random', model_name = 'gpt-4o'):
     
     agent_dir = Saving_path
     agent_list = []
@@ -175,9 +179,8 @@ for iteration_num in range(iterations):
     safe_print('-------###-------###-------###-------')
     safe_print(f'Iteration num is: {iteration_num}\n\n')
     #user_prompt_list, response_total_list, pg_state_list, success_failure, index_query_times, token_num_count_list, Saving_path_result 
-    rumor_matrix = run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='_w_only_state_action_history',
-            #cen_decen_framework='HMAS-2', model_name = model_name)
-            cen_decen_framework='DMAS', selection_policy = 'more_friend_first', patient_zero_policy = 'more_friend_first', model_name = model_name)
+    rumor_matrix = run_exp(Saving_path, iteration_num, query_time_limit, agent_count, num_of_initial_posts, dialogue_history_method='all_history',
+            selection_policy = 'random', patient_zero_policy = 'random', model_name = model_name)
 
     safe_print(f'Done')
     '''
