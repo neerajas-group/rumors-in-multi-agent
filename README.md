@@ -1,41 +1,47 @@
-# Multi-Agent-Framework ([Website](https://yongchao98.github.io/MIT-REALM-Multi-Robot/), ICRA 2024)
-Here we show the related code for the Multi-Agent Framework paper. The code will be updated dynamically in the future. There are in total four environments, corresponding to BoxNet1, BoxNet2, BoxLift, and Warehouse, respectively.
-
-<div align="center">
-    <img src="Github-figures/main_figure.png" alt="Main image" width="75%"/>
-</div>
+# Rumors-in-Multi-Agent-Simulation
+This repository contains the code for the ECE 381K-20 Network Final Project: Simulating Rumor Spread in an LLM-based Agent Society. The code is inspired by the paper: MIT-REALM-Multi-Robot (https://yongchao98.github.io/MIT-REALM-Multi-Robot/).
 
 ## Requirements
-Please install the following Python packages.
-```
-pip install numpy openai re random time copy tiktoken
-```
+Install the required Python packages using the following command:
+pip install numpy openai re random time copy tiktoken networkx
 
-Then you need to get your OpenAI key from https://beta.openai.com/
-Put that OpenAI key starting 'sk-' into the LLM.py, line8
+Alternatively, you can install them using requirements.txt.
 
-## Create testing trial environments
-Run the env1_create.py/env2_create.py/env3_create.py/env4_create.py to create the environments, remember change the Code_dir_path in the last lines.
+Additionally, obtain your OpenAI API key from https://beta.openai.com/. Add the key (starting with 'sk-') to LLM.py on line 8.
 
-```
-python env1_create.py
-```
+The Facebook Social Network dataset can be downloaded from https://snap.stanford.edu/data/ego-Facebook.html.
+
+## Create Testing Environments
+Generate a network and assign agents to each node as the first step.
+
+Run rumor_test_env.py to create the environments. The script supports three types of networks and the Facebook dataset. The following functions are used to generate specific network types:
+- create_env1: Random network
+- create_env2: Scale-free network
+- create_env3: Small-world network
+- create_env_fb: Facebook dataset-based network
+
+For the first three network types, the number of nodes and agent configurations can be modified in their respective generation functions. Use the add_fact_check parameter to enable an agent-based fact checker that connects to all nodes.
+
+To use a specific create_env* function, add it to the main function in the script. Note: Creating a new environment will overwrite any existing one.
+
+Run the following command to generate the environment:
+python rumor_test_env.py
 
 ## Usage
-Run the env1-box-arrange.py/env2-box-arrange.py/env3-box-arrange.py/env4-box-arrange.py to test our approaches in different frameworks and dialogue history methods. In around Line270, set up the models(GPT-3/4), frameworks (HMAS-2,HMSA-1, DMAS,CMAS), dialogue history method, and your working path dir. Then run the script:
+Run rumor_test_run.py to simulate rumor spreading in social networks. Modify the models (e.g., GPT-4o, GPT-4o-mini) around line 265.
 
-```
-python env1-box-arrange.py
-```
+Adjustable parameters:
+- query_time_limit: Number of iterations.
+- agent_count: Number of agents (must match the value used during environment creation).
+- num_of_initial_posts: Number of random posts initially assigned to each agent.
+- selection_policy: Agent selection strategy ('random' or 'mff', where 'mff' gives preference to agents with more friends).
+- patient_zero_policy: Rumor initialization strategy ('random' or 'mff', where 'mff' starts with the agent with the most friends).
+- fact_checker: Whether to include a fact checker (options: None, 'agent-based', 'special').
+- fact_checker_freq: Frequency of fact-checker activation.
+- filter_friends: Percentage of friends who will not receive a post.
+- filter_post: Probability of a post being deleted.
 
-The experimental results will appear in the generated dir Env1_BoxNet1. For visualizing the testing results, set up the Code_dir_path in line2, then run the script:
+Run the following command to start the simulation:
+python rumor_test_run.py
 
-```
-python data_visua.py
-```
-
-## Recommended Work
-
-[AutoTAMP: Autoregressive Task and Motion Planning with LLMs as Translators and Checkers](https://arxiv.org/pdf/2306.06531.pdf)
-
-[NL2TL: Transforming Natural Languages to Temporal Logics using Large Language Models](https://arxiv.org/pdf/2305.07766.pdf)
+The experimental results
