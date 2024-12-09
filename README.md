@@ -25,7 +25,9 @@ For the first three network types, the number of nodes and agent configurations 
 To use a specific create_env* function, add it to the main function in the script. Note: Creating a new environment will overwrite any existing one.
 
 Run the following command to generate the environment:
+```
 python rumor_test_env.py
+```
 
 ## Usage
 Run rumor_test_run.py to simulate rumor spreading in social networks. Modify the models (e.g., GPT-4o, GPT-4o-mini) around line 265.
@@ -42,6 +44,14 @@ Adjustable parameters:
 - filter_post: Probability of a post being deleted.
 
 Run the following command to start the simulation:
+```
 python rumor_test_run.py
+```
 
-The experimental results
+The experimental results and rumor matrix will be saved in the specified path (path_to_multi-agent-framework).
+
+## Additional Files
+- agents_XXX.json: Defines agent personas.
+- LLM.py: Provides ChatGPT API access.
+- prompt_rumor_test.py: Contains prompts and supporting functions.
+- plotting_scripts/: Includes scripts for generating visualizations for M1/M2/M3.
