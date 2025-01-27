@@ -5,7 +5,7 @@ enc = tiktoken.get_encoding("cl100k_base")
 assert enc.decode(enc.encode("hello world")) == "hello world"
 enc = tiktoken.encoding_for_model("gpt-4")
 
-openai_api_key_name = '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'
+openai_api_key_name = 'PUT-YOUR-API-KEY-HERE'
 
 def GPT_response(messages, model_name):
   token_num_count = 0
