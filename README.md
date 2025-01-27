@@ -1,5 +1,5 @@
 # Rumors-in-Multi-Agent-Simulation
-This repository contains the code for the ECE 381K-20 Network Final Project: Simulating Rumor Spread in an LLM-based Agent Society. The code is inspired by the paper: MIT-REALM-Multi-Robot (https://yongchao98.github.io/MIT-REALM-Multi-Robot/).
+This repository contains the code for WMAC 2025: AAAI 2025 Workshop on Advancing LLM-Based Multi-Agent Collaboration Paper: Simulating Rumor Spreading in Social Networks using LLM agents. The code is inspired by the paper: MIT-REALM-Multi-Robot (https://yongchao98.github.io/MIT-REALM-Multi-Robot/).
 
 ## Requirements
 Install the required Python packages using the following command:
