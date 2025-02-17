@@ -1,4 +1,5 @@
-# Rumors-in-Multi-Agent-Simulation
+# Simulating Rumor Spreading in Social Networks using LLM agents
+### Rumors-in-Multi-Agent-Simulation
 This repository contains the code for *WMAC 2025: AAAI 2025 Workshop on Advancing LLM-Based Multi-Agent Collaboration* Paper: **Simulating Rumor Spreading in Social Networks using LLM agents**. The code is inspired by the paper: **MIT-REALM-Multi-Robot** (https://yongchao98.github.io/MIT-REALM-Multi-Robot/).
 
 ## Requirements
